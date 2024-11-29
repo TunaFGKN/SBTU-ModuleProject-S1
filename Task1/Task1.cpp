@@ -1,3 +1,10 @@
+/*
+	SBTU - Module Project
+	Semester 1
+	Computer Engineering
+	Tuna Figankaplan, Ali Bozkurt, Sude Yýldýrým, Burak Yalýtuna
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -5,12 +12,19 @@
 
 using namespace std;
 
+// Declaring variables
 const float GRAVITY = 9.8;
 const float PI = 3.14159;
 float initialSpeed, angle, height, ftime, _distance;
 
+// Function that returns the bigger root of a quadratic equation. Format: ax^2 + bx + c = 0 
 float solveForQuadraticEquation(float a, float b, float c) {
+	if (a == 0) {
+		throw new exception("This is not a quadratic equation!");
+	}
+
 	float delta = pow(b, 2) - 4 * a * c;
+
 	if (delta < 0) {
 		throw new exception("There is no real solution for this quadratic equation!");
 	}
@@ -19,6 +33,7 @@ float solveForQuadraticEquation(float a, float b, float c) {
 	}
 }
 
+// Returns the flight time by solving the quadratic equation 
 float findTheFlightTime() {
 	float radian = angle * PI / 180;
 	float a = GRAVITY / 2;
@@ -56,16 +71,16 @@ int main()
 			case '2': // Impact point
 				cout << fixed << setprecision(3) << "The ball will hit the ground " << _distance << " meters away from the edge of the barn.\n" << endl;
 				break;
-			case '3':
+			case '3': // 
 				cout << "\n" << endl;
 				break;
-			case '4':
+			case '4': // 
 				cout << "\n" << endl;
 				break;
-			case '5':
+			case '5': // 
 				cout << "\n" << endl;
 				break;
-			case 'q':
+			case 'q': //
 				cout << "Closing the program...\n" << endl;
 				return 0;
 			default:
@@ -74,16 +89,3 @@ int main()
 		}
     }
 }
-
-
-
-
-/*
-	float a, b, c, delta, time;
-	a = GRAVITY / 2;
-	b = initialSpeed * sin(radian);
-	c = -1*height;
-	delta = pow(b, 2) - 4 * a * c;
-	cout << b << endl;
-	time = ((-1*b) + sqrt(delta)) / (2 * a);
-*/
