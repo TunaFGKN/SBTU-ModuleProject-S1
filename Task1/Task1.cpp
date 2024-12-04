@@ -2,6 +2,7 @@
 	SBTU - Module Project
 	Semester 1
 	Computer Engineering
+	Task 1
 	Tuna Figankaplan, Ali Bozkurt, Sude Yildirim, Burak Yalituna
 */
 
