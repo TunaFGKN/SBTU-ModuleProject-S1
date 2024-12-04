@@ -1,8 +1,6 @@
 /*
-	SBTU - Module Project
-	Semester 1
-	Computer Engineering
-	Task 1
+	SBTU - Computer Engineering
+	Module Project - Semester 1
 	Tuna Figankaplan, Ali Bozkurt, Sude Yildirim, Burak Yalituna
 */
 
@@ -44,9 +42,14 @@ float findTheFlightTime() {
 	return solveForQuadraticEquation(a, b, c);
 }
 
+// Returns the x and y components of the position vector at an exact time as a vector.
 vector<float> positionVectorOverTime(float t) {
-	vector<float> component = { initialSpeed * cos(radian) * t, (-initialSpeed * sin(radian) * t) + (-GRAVITY / 2 * t * t) };
+	vector<float> component = {initialSpeed * cos(radian) * t, (initialSpeed * sin(radian) * t) + (GRAVITY / 2 * t * t)};
 	return component;
+}
+
+void positionVectorOutputHandler(float time = 1) {
+	cout << ftime * time << " seconds: R = (" << positionVectorOverTime(ftime * time)[0] << "i - " << positionVectorOverTime(ftime * time)[1] << "j) m" << endl;
 }
 
 int main()
@@ -70,7 +73,6 @@ int main()
 
 	while (true) {
 		char option;
-		
 		cin >> option;
 
 		switch (option)
@@ -81,11 +83,11 @@ int main()
 			case '2': // Impact point
 				cout << fixed << setprecision(3) << "The ball will hit the ground " << _distance << " meters away from the edge of the barn.\n" << endl;
 				break;
-			case '3': // 
-				cout << ftime * 0.25 << " seconds: R = (" << positionVectorOverTime(ftime * 0.25)[0] << " i " << positionVectorOverTime(ftime * 0.25)[1] << " j) m" << endl;
-				cout << ftime * 0.5 << " seconds: R = (" << positionVectorOverTime(ftime * 0.5)[0] << " i " << positionVectorOverTime(ftime * 0.5)[1] << " j) m" << endl;
-				cout << ftime * 0.75 << " seconds: R = (" << positionVectorOverTime(ftime * 0.75)[0] << " i " << positionVectorOverTime(ftime * 0.75)[1] << " j) m" << endl;
-				cout << ftime << " seconds: R = (" << positionVectorOverTime(ftime)[0] << " i " << positionVectorOverTime(ftime)[1] << " j) m" << endl;
+			case '3': // Position vector over 4 time intervals
+				positionVectorOutputHandler(0.25);
+				positionVectorOutputHandler(0.5);
+				positionVectorOutputHandler(0.75);
+				positionVectorOutputHandler(1);
 				cout << endl;
 				break;
 			case '4': // 
