@@ -9,6 +9,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include "gnuplot-iostream.h"
 
 using namespace std;
 
@@ -52,6 +53,36 @@ void positionVectorOutputHandler(float time = 1) {
 	cout << ftime * time << " seconds: R = (" << positionVectorOverTime(ftime * time)[0] << "i - " << positionVectorOverTime(ftime * time)[1] << "j) m" << endl;
 }
 
+void plotTrajectory() {
+	// GNUPlot nesnesi oluþtur
+	Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
+
+	// Verileri GNUPlot'a direkt olarak besle
+	vector<pair<float, float>> trajectoryData; // X ve Y koordinatlarý
+
+	float timeStep = 0.01; // Zaman adýmý
+	for (float t = 0; t <= ftime; t += timeStep) {
+		float x = initialSpeed * cos(radian) * t; // X koordinatý
+		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t); // Y koordinatý
+
+		if (x == _distance) break; // Yere düþtüðünde döngüyü durdur.
+
+		trajectoryData.push_back(make_pair(x, y)); // Verileri vektöre ekle
+	}
+
+	// GNUPlot komutlarý
+	gp << "set title 'Projectile Motion Trajectory'\n";
+	gp << "set xlabel 'Horizontal Distance (m)'\n";
+	gp << "set ylabel 'Vertical Distance (m)'\n";
+	gp << "plot '-' with lines title 'Trajectory'\n";
+
+	// Trajektori verilerini GNUPlot'a gönder
+	gp.send1d(trajectoryData);
+
+	cout << "Trajectory plotted successfully!\n" << endl;
+	
+}
+
 int main()
 {
 	cout << "Please enter the initial speed of the snowball (m/s): ";
@@ -68,7 +99,7 @@ int main()
 	_distance = (initialSpeed * cos(radian)) * ftime;
 
 	cout << "------------------------------------------------------------------------------------------------------" << endl;
-	cout << "1) Display the time of flight.\n2) Find the impact point.\n3) Horizontal and vertical coordinates of the snowball's motion over time.\n4) Decide if the snowball will hit the person or not.\n5) Exact distance at which the snowball will hit a person standing at a specified distance and height.\n9) Exit\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
+	cout << "1) Display the time of flight.\n2) Find the impact point.\n3) Horizontal and vertical coordinates of the snowball's motion over time.\n4) Decide if the snowball will hit the person or not.\n5) Exact distance at which the snowball will hit a person standing at a specified distance and height.\n6) Plot the trajectory.\n9) Exit\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
 	cout << "------------------------------------------------------------------------------------------------------\n" << endl;
 
 	while (true) {
@@ -95,6 +126,9 @@ int main()
 				break;
 			case '5': // 
 				cout << "\n" << endl;
+				break;
+			case '6':
+				plotTrajectory();
 				break;
 			case '9': //
 				cout << "Closing the program...\n" << endl;
