@@ -108,6 +108,7 @@ int main()
 
 		switch (option)
 		{
+			
 			case '1': // Flight time
 				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
@@ -121,13 +122,23 @@ int main()
 				positionVectorOutputHandler(1);
 				cout << endl;
 				break;
-			case '4': // 
-				cout << "\n" << endl;
+			case '4': // Determine if the ball hits the person
+				if (_distance < 4) {
+					cout << "Will not hit." << endl;
+					break;
+				}
+				
+				if (initialSpeed * cos(radian) * solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9) < 4) {
+					cout << "\a Will hit." << endl;
+				}
+				else {
+					cout << "will not hit." << endl;
+				}
 				break;
-			case '5': // 
-				cout << "\n" << endl;
+			case '5': // Exact Distance
+				cout << solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9) * initialSpeed * cos(radian) << "...." << endl;
 				break;
-			case '6':
+			case '6': // Plot trajectory
 				plotTrajectory();
 				break;
 			case '9': //
