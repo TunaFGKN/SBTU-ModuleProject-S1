@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cmath>
 #include <vector>
+#include "gnuplot-iostream.h"
 
 using namespace std;
 
@@ -28,6 +29,11 @@ vector<float> findKineticEnergy(float massOfBullet, float initialSpeed, float ma
     float kineticEnergy2 = 0.5 * (massOfBullet + massOfPendulum) * pow(commonSpeed, 2);
     vector<float> kineticEnergies = { kineticEnergy1, kineticEnergy2 };
     return kineticEnergies;
+}
+
+void plotSwingPath() {
+    cout << "Calculating the path..." << endl;
+    Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
 }
 
 int main()
@@ -70,6 +76,9 @@ int main()
         case 4:
             cout << fixed << setprecision(3) << "Combined kinetic energy after collision: " << kineticEnergyCombined << " J \n" << endl;
             break;
+        case 5:
+            plotSwingPath();
+            cout << endl;
         case 9:
             cout << "Closing the program...\n" << endl;
             return 0;

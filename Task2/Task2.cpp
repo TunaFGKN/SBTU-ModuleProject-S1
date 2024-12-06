@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cmath>
 #include <vector>
+#include "gnuplot-iostream.h"
 
 using namespace std;
 
@@ -26,6 +27,38 @@ vector<float> calculateSpeedsAfterCollision(float initialSpeed, float angleA, fl
 
 float calculateEnergyLoss(float initialSpeed, float speedAfterCollisionA) {
     return 0.5 * (pow(initialSpeed, 2) - pow(speedAfterCollisionA, 2));
+}
+
+void plotTrajectory() {
+    Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
+    cout << "Calculating the trajectory..." << endl;
+    vector<pair<float, float>> trajectoryA;
+    vector<pair<float, float>> trajectoryB;
+
+    // Zaman aralýðý ve yörünge hesaplamalarý
+    for (float t = 0; t <= 10; t += 0.1) {
+
+        // After Collision - Asteroid A
+        float xA = speedAfterCollisionA * cos(angleA * PI / 180) * t;
+        float yA = speedAfterCollisionA * sin(angleA * PI / 180) * t;
+        trajectoryA.emplace_back(xA, yA);
+
+        // After Collision - Asteroid B
+        float xB = speedAfterCollisionB * cos(angleB * PI / 180) * t;
+        float yB = speedAfterCollisionB * sin(angleB * PI / 180) * t;
+        trajectoryB.emplace_back(xB, yB);
+    }
+
+    // GNUplot plotting the graph.
+    gp << "set title 'Asteroid Collision Trajectories'\n";
+    gp << "set xlabel 'x (m)'\n";
+    gp << "set ylabel 'y (m)'\n";
+    gp << "set grid\n";
+    gp << "plot '-' with lines title 'Asteroid A (After)', "
+        "'-' with lines title 'Asteroid B (After)'\n ";        
+    gp.send1d(trajectoryA);
+    gp.send1d(trajectoryB);
+
 }
 
 int main()
@@ -53,6 +86,10 @@ int main()
         cin >> option;
         switch (option)
         {
+        /*case 0:
+            cout << "Returning to the beginning...\n" << endl;
+            main();
+            return 0;*/
         case 1:
             cout << fixed << setprecision(3) << "Speed after collision of A: " << speedAfterCollisionA << "m/s" << endl << "Speed after collision of B: " << speedAfterCollisionB << "m/s \n" << endl;
             break;
@@ -60,8 +97,9 @@ int main()
             cout << fixed << setprecision(3) << "Kinetic energy loss is: " << energyLoss << "m J \n" << endl;
             break;
         case 3:
-            cout << "\n";
-            break;
+            plotTrajectory();
+            cout << endl;
+            break;        
         case 9:
             cout << "Closing the program...";
             return 0;
