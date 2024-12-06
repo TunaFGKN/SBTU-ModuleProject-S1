@@ -34,6 +34,16 @@ vector<float> findKineticEnergy(float massOfBullet, float initialSpeed, float ma
 void plotSwingPath() {
     cout << "Calculating the path..." << endl;
     Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
+    const float timeStep = 0.05;
+    const float thetaMax = acos(1 - dHeight / pendulumLength); // Maximum angle.
+    const float omega = sqrt(GRAVITY / pendulumLength);
+    for (int i = 0; i < 100; ++i) {
+        float time = i * timeStep;
+        float theta = thetaMax * cos(omega * time); // Açý
+        float x = pendulumLength * sin(theta);     // X koordinatý
+        float y = -pendulumLength * cos(theta);    // Y koordinatý
+        
+    }
 }
 
 int main()
