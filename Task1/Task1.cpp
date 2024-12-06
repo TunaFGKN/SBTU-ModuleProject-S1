@@ -16,7 +16,7 @@ using namespace std;
 // Declaring variables
 const float GRAVITY = 9.8;
 const float PI = 3.14159;
-float initialSpeed, angle, height, ftime, _distance;
+float initialSpeed, angle, height, ftime, impactPoint;
 float radian;
 
 // Function that returns the bigger root of a quadratic equation. Format: ax^2 + bx + c = 0 
@@ -54,33 +54,35 @@ void positionVectorOutputHandler(float time = 1) {
 }
 
 void plotTrajectory() {
-	// GNUPlot nesnesi oluþtur
+	// Create GNUPlot object
 	Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
 
-	// Verileri GNUPlot'a direkt olarak besle
 	vector<pair<float, float>> trajectoryData; // X ve Y koordinatlarý
 
-	float timeStep = 0.01; // Zaman adýmý
+	float timeStep = 0.01; // Time step
 	for (float t = 0; t <= ftime; t += timeStep) {
-		float x = initialSpeed * cos(radian) * t; // X koordinatý
-		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t); // Y koordinatý
+		float x = initialSpeed * cos(radian) * t; // X coordinate
+		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t); // Y coordinate
 
-		if (x == _distance) break; // Yere düþtüðünde döngüyü durdur.
+		if (x == impactPoint) break; // stop when it touches the ground
 
-		trajectoryData.push_back(make_pair(x, y)); // Verileri vektöre ekle
+		trajectoryData.push_back(make_pair(x, y)); // Data
 	}
 
-	// GNUPlot komutlarý
+	// GNUPlot commands
 	gp << "set title 'Projectile Motion Trajectory'\n";
 	gp << "set xlabel 'Horizontal Distance (m)'\n";
 	gp << "set ylabel 'Vertical Distance (m)'\n";
 	gp << "plot '-' with lines title 'Trajectory'\n";
 
-	// Trajektori verilerini GNUPlot'a gönder
+	// TSend data to gnuplot
 	gp.send1d(trajectoryData);
 
 	cout << "Trajectory plotted successfully!\n" << endl;
-	
+}
+
+float calculateDistanceToHitThePerson() {
+	return initialSpeed * cos(radian) * solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9);
 }
 
 int main()
@@ -96,7 +98,7 @@ int main()
 	cin >> height;
 
 	ftime = findTheFlightTime();
-	_distance = (initialSpeed * cos(radian)) * ftime;
+	impactPoint = (initialSpeed * cos(radian)) * ftime;
 
 	cout << "------------------------------------------------------------------------------------------------------" << endl;
 	cout << "1) Display the time of flight.\n2) Find the impact point.\n3) Horizontal and vertical coordinates of the snowball's motion over time.\n4) Decide if the snowball will hit the person or not.\n5) Exact distance at which the snowball will hit a person standing at a specified distance and height.\n6) Plot the trajectory.\n9) Exit\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
@@ -113,7 +115,7 @@ int main()
 				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
 			case '2': // Impact point
-				cout << fixed << setprecision(3) << "The ball will hit the ground " << _distance << " meters away from the edge of the barn.\n" << endl;
+				cout << fixed << setprecision(3) << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
 			case '3': // Position vector over 4 time intervals
 				positionVectorOutputHandler(0.25);
@@ -123,20 +125,20 @@ int main()
 				cout << endl;
 				break;
 			case '4': // Determine if the ball hits the person
-				if (_distance < 4) {
+				if (impactPoint < 4) {
 					cout << "Will not hit." << endl;
 					break;
 				}
-				
-				if (initialSpeed * cos(radian) * solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9) < 4) {
-					cout << "\a Will hit." << endl;
+				if (calculateDistanceToHitThePerson() < 4) {
+					cout << "\aWill hit." << endl;
 				}
 				else {
-					cout << "will not hit." << endl;
+					cout << "Will not hit." << endl;
 				}
+				cout << endl;
 				break;
 			case '5': // Exact Distance
-				cout << solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9) * initialSpeed * cos(radian) << "...." << endl;
+				cout << "If the person were standing " << calculateDistanceToHitThePerson() << " meters away from the wall, the snowball would have hit the person. \n" << endl;
 				break;
 			case '6': // Plot trajectory
 				plotTrajectory();
