@@ -13,6 +13,7 @@
 using namespace std;
 
 const float GRAVITY = 9.8;
+const float PI = 3.14159;
 float initialSpeed, massOfBullet, massOfPendulum, pendulumLength;
 float commonSpeed, dHeight, kineticEnergyBullet, kineticEnergyCombined;
 
@@ -34,16 +35,28 @@ vector<float> findKineticEnergy(float massOfBullet, float initialSpeed, float ma
 void plotSwingPath() {
     cout << "Calculating the path..." << endl;
     Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
-    const float timeStep = 0.05;
-    const float thetaMax = acos(1 - dHeight / pendulumLength); // Maximum angle.
-    const float omega = sqrt(GRAVITY / pendulumLength);
+
+    float amplitude = asin(dHeight / pendulumLength);
+    float angularFrequency = sqrt(GRAVITY / pendulumLength);
+    float timeStep = 2 * PI / (angularFrequency * 100);
+
+    vector<pair<float, float>> swingPath;
+
     for (int i = 0; i < 100; ++i) {
         float time = i * timeStep;
-        float theta = thetaMax * cos(omega * time); // Açý
-        float x = pendulumLength * sin(theta);     // X koordinatý
-        float y = -pendulumLength * cos(theta);    // Y koordinatý
-        
+        float angle = amplitude * cos(angularFrequency * time);
+        float x = pendulumLength * sin(angle);
+        float y = -pendulumLength * cos(angle);
+        swingPath.emplace_back(x,y);
     }
+    gp << "set title 'Trajectory After Collision'\n";
+    gp << "set xlabel 'X Position (m)'\n";
+    gp << "set ylabel 'Y Position (m)'\n";
+    gp << "set grid\n";
+    gp << "set key left top\n";
+    gp << "plot '-' with lines title 'Swing Path' \n";
+        
+    gp.send1d(swingPath);
 }
 
 int main()
@@ -74,6 +87,10 @@ int main()
         int option;
         cin >> option;
         switch (option) {
+        /*case 0:
+            cout << "Returning to the beginning...\n" << endl;
+            main();
+            return 0;*/
         case 1:
             cout << fixed << setprecision(3) << "Common Speed: " << commonSpeed << " m/s \n"<< endl;
             break;

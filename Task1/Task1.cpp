@@ -110,7 +110,10 @@ int main()
 
 		switch (option)
 		{
-			
+			/*case 0:
+			cout << "Returning to the beginning...\n" << endl;
+			main();
+			return 0;*/			
 			case '1': // Flight time
 				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
@@ -126,14 +129,14 @@ int main()
 				break;
 			case '4': // Determine if the ball hits the person
 				if (impactPoint < 4) {
-					cout << "Will not hit." << endl;
+					cout << "Snowball will not hit the person." << endl;
 					break;
 				}
 				if (calculateDistanceToHitThePerson() < 4) {
-					cout << "\aWill hit." << endl;
+					cout << "\aSnowball will hit the person." << endl;
 				}
 				else {
-					cout << "Will not hit." << endl;
+					cout << "Snowball will not hit the person." << endl;
 				}
 				cout << endl;
 				break;
@@ -143,7 +146,7 @@ int main()
 			case '6': // Plot trajectory
 				plotTrajectory();
 				break;
-			case '9': //
+			case '9':
 				cout << "Closing the program...\n" << endl;
 				return 0;
 			default:
