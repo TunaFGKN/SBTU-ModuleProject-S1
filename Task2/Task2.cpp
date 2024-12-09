@@ -17,12 +17,12 @@ float initialSpeed, angleA, angleB;
 float speedAfterCollisionA, speedAfterCollisionB, energyLoss;
 
 vector<float> calculateSpeedsAfterCollision(float initialSpeed, float angleA, float angleB) {
-    float rate;
-    rate = sin(angleB * PI / 180) / sin(angleA * PI / 180);
+    float rate = sin(angleB * PI / 180) / sin(angleA * PI / 180);
+
     speedAfterCollisionB = initialSpeed / (rate * cos(angleA * PI / 180) + cos(angleB * PI / 180));
     speedAfterCollisionA = rate * speedAfterCollisionB;
-    vector<float> speedsAfterCollision = { speedAfterCollisionA, speedAfterCollisionB };
-    return speedsAfterCollision;
+
+    return { speedAfterCollisionA, speedAfterCollisionB };
 }
 
 float calculateEnergyLoss(float initialSpeed, float speedAfterCollisionA) {
@@ -58,7 +58,6 @@ void plotTrajectory() {
         "'-' with lines title 'Asteroid B (After)'\n ";        
     gp.send1d(trajectoryA);
     gp.send1d(trajectoryB);
-
 }
 
 int main()
@@ -72,8 +71,9 @@ int main()
     cout << "Angle B (deg): ";
     cin >> angleB;
 
-    speedAfterCollisionA = calculateSpeedsAfterCollision(initialSpeed, angleA, angleB)[0];
-    speedAfterCollisionB = calculateSpeedsAfterCollision(initialSpeed, angleA, angleB)[1];
+    vector<float> speeds = calculateSpeedsAfterCollision(initialSpeed, angleA, angleB);
+    speedAfterCollisionA = speeds[0];
+    speedAfterCollisionB = speeds[1];
     energyLoss = calculateEnergyLoss(initialSpeed, speedAfterCollisionA);
 
     cout << "------------------------------------------------------------------------------------------------------" << endl;
@@ -86,10 +86,10 @@ int main()
         cin >> option;
         switch (option)
         {
-        /*case 0:
+        case 0:
             cout << "Returning to the beginning...\n" << endl;
             main();
-            return 0;*/
+            return 0;
         case 1:
             cout << fixed << setprecision(3) << "Speed after collision of A: " << speedAfterCollisionA << "m/s" << endl << "Speed after collision of B: " << speedAfterCollisionB << "m/s \n" << endl;
             break;

@@ -87,10 +87,10 @@ int main()
         int option;
         cin >> option;
         switch (option) {
-        /*case 0:
+        case 0:
             cout << "Returning to the beginning...\n" << endl;
             main();
-            return 0;*/
+            return 0;
         case 1:
             cout << fixed << setprecision(3) << "Common Speed: " << commonSpeed << " m/s \n"<< endl;
             break;

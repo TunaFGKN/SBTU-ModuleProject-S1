@@ -37,10 +37,7 @@ float solveForQuadraticEquation(float a, float b, float c) {
 
 // Returns the flight time by solving the quadratic equation 
 float findTheFlightTime() {
-	float a = GRAVITY / 2;
-	float b = initialSpeed * sin(radian);
-	float c = -height;
-	return solveForQuadraticEquation(a, b, c);
+	return solveForQuadraticEquation(GRAVITY/2, initialSpeed * sin(radian), -height);
 }
 
 // Returns the x and y components of the position vector at an exact time as a vector.
@@ -49,8 +46,8 @@ vector<float> positionVectorOverTime(float t) {
 	return component;
 }
 
-void positionVectorOutputHandler(float time = 1) {
-	cout << ftime * time << " seconds: R = (" << positionVectorOverTime(ftime * time)[0] << "i - " << positionVectorOverTime(ftime * time)[1] << "j) m" << endl;
+void printPosition(float timeFraction = 1) {
+	cout << ftime * timeFraction << " seconds: R = (" << positionVectorOverTime(ftime * timeFraction)[0] << "i - " << positionVectorOverTime(ftime * timeFraction)[1] << "j) m" << endl;
 }
 
 void plotTrajectory() {
@@ -59,8 +56,7 @@ void plotTrajectory() {
 
 	vector<pair<float, float>> trajectoryData; // X ve Y koordinatlarý
 
-	float timeStep = 0.01; // Time step
-	for (float t = 0; t <= ftime; t += timeStep) {
+	for (float t = 0; t <= ftime; t += 0.01) {
 		float x = initialSpeed * cos(radian) * t; // X coordinate
 		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t); // Y coordinate
 
@@ -75,7 +71,7 @@ void plotTrajectory() {
 	gp << "set ylabel 'Vertical Distance (m)'\n";
 	gp << "plot '-' with lines title 'Trajectory'\n";
 
-	// TSend data to gnuplot
+	// Send data to gnuplot
 	gp.send1d(trajectoryData);
 
 	cout << "Trajectory plotted successfully!\n" << endl;
@@ -98,7 +94,7 @@ int main()
 	cin >> height;
 
 	ftime = findTheFlightTime();
-	impactPoint = (initialSpeed * cos(radian)) * ftime;
+	impactPoint = initialSpeed * cos(radian) * ftime;
 
 	cout << "------------------------------------------------------------------------------------------------------" << endl;
 	cout << "1) Display the time of flight.\n2) Find the impact point.\n3) Horizontal and vertical coordinates of the snowball's motion over time.\n4) Decide if the snowball will hit the person or not.\n5) Exact distance at which the snowball will hit a person standing at a specified distance and height.\n6) Plot the trajectory.\n9) Exit\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
@@ -110,10 +106,10 @@ int main()
 
 		switch (option)
 		{
-			/*case 0:
-			cout << "Returning to the beginning...\n" << endl;
-			main();
-			return 0;*/			
+			case '0':
+				cout << "Returning to the beginning...\n" << endl;
+				main();
+				return 0;
 			case '1': // Flight time
 				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
@@ -121,24 +117,23 @@ int main()
 				cout << fixed << setprecision(3) << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
 			case '3': // Position vector over 4 time intervals
-				positionVectorOutputHandler(0.25);
-				positionVectorOutputHandler(0.5);
-				positionVectorOutputHandler(0.75);
-				positionVectorOutputHandler(1);
+				printPosition(0.25);
+				printPosition(0.5);
+				printPosition(0.75);
+				printPosition(1);
 				cout << endl;
 				break;
 			case '4': // Determine if the ball hits the person
 				if (impactPoint < 4) {
-					cout << "Snowball will not hit the person." << endl;
+					cout << "Snowball will not hit the person.\n" << endl;
 					break;
 				}
 				if (calculateDistanceToHitThePerson() < 4) {
-					cout << "\aSnowball will hit the person." << endl;
+					cout << "\aSnowball will hit the person.\n" << endl;
 				}
 				else {
-					cout << "Snowball will not hit the person." << endl;
+					cout << "Snowball will not hit the person.\n" << endl;
 				}
-				cout << endl;
 				break;
 			case '5': // Exact Distance
 				cout << "If the person were standing " << calculateDistanceToHitThePerson() << " meters away from the wall, the snowball would have hit the person. \n" << endl;
