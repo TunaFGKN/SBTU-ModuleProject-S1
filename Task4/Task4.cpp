@@ -1,3 +1,9 @@
+/*
+    SBTU - Computer Engineering
+    Module Project - Semester 1
+    Tuna Figankaplan, Ali Bozkurt, Sude Yildirim, Burak Yalituna
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <string>
