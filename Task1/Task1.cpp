@@ -101,29 +101,29 @@ int main()
 	cout << "------------------------------------------------------------------------------------------------------\n" << endl;
 
 	while (true) {
-		char option;
+		int option;
 		cin >> option;
 
 		switch (option)
 		{
-			case '0':
+			case 0:
 				cout << "Returning to the beginning...\n" << endl;
 				main();
 				return 0;
-			case '1': // Flight time
+			case 1: // Flight time
 				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
-			case '2': // Impact point
+			case 2: // Impact point
 				cout << fixed << setprecision(3) << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
-			case '3': // Position vector over 4 time intervals
+			case 3: // Position vector over 4 time intervals
 				printPosition(0.25);
 				printPosition(0.5);
 				printPosition(0.75);
 				printPosition(1);
 				cout << endl;
 				break;
-			case '4': // Determine if the ball hits the person
+			case 4: // Determine if the ball hits the person
 				if (impactPoint < 4) {
 					cout << "Snowball will not hit the person.\n" << endl;
 					break;
@@ -135,13 +135,13 @@ int main()
 					cout << "Snowball will not hit the person.\n" << endl;
 				}
 				break;
-			case '5': // Exact Distance
+			case 5: // Exact Distance
 				cout << "If the person were standing " << calculateDistanceToHitThePerson() << " meters away from the wall, the snowball would have hit the person. \n" << endl;
 				break;
-			case '6': // Plot trajectory
+			case 6: // Plot trajectory
 				plotTrajectory();
 				break;
-			case '9':
+			case 9:
 				cout << "Closing the program...\n" << endl;
 				return 0;
 			default:
