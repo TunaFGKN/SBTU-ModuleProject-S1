@@ -59,6 +59,11 @@ void plotSwingPath() {
     gp.send1d(swingPath);
 }
 
+bool validationCheck(float initialSpeed, float massOfBullet, float massOfPendulum, float pendulumLength) {
+    if (initialSpeed || massOfBullet || massOfPendulum || pendulumLength <= 0) return 0;    
+    return 1;
+}
+
 int main()
 {
     cout << "Enter initial speed (m/s): ";
@@ -72,6 +77,11 @@ int main()
 
     cout << "Enter the length of the pendulum (m): ";
     cin >> pendulumLength;
+
+    if (!validationCheck(initialSpeed, massOfBullet, massOfPendulum, pendulumLength)) {
+        cout << "\nInvalid inputs. Please try again." << endl;
+        return 0;
+    }
 
     commonSpeed = findCommonSpeed(initialSpeed, massOfBullet, massOfPendulum);
     dHeight = findHeight(commonSpeed);

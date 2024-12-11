@@ -16,8 +16,8 @@ using namespace std;
 // Declaring variables
 const float GRAVITY = 9.8;
 const float PI = 3.14159;
-float initialSpeed, angle, height, ftime, impactPoint;
-float radian;
+float initialSpeed, angle, height;
+float radian, ftime, impactPoint;
 
 // Function that returns the bigger root of a quadratic equation. Format: ax^2 + bx + c = 0 
 float solveForQuadraticEquation(float a, float b, float c) {
@@ -81,6 +81,13 @@ float calculateDistanceToHitThePerson() {
 	return initialSpeed * cos(radian) * solveForQuadraticEquation(GRAVITY / 2, initialSpeed * sin(radian), -height + 1.9);
 }
 
+bool validationCheck(float initialSpeed, float angle, float height) {
+	if (initialSpeed <= 0) return 0;
+	if ((angle > 90) && (angle <= 0)) return 0;	
+	if (height <= 0) return 0;
+	return 1;
+}
+
 int main()
 {
 	cout << "Please enter the initial speed of the snowball (m/s): ";
@@ -92,6 +99,11 @@ int main()
 
 	cout << "Please enter the height (m): ";
 	cin >> height;
+
+	if (!validationCheck(initialSpeed, angle, height)) {
+		cout << endl << "Invalid inputs. Please try again." << endl;
+		return 0;
+	}
 
 	ftime = findTheFlightTime();
 	impactPoint = initialSpeed * cos(radian) * ftime;

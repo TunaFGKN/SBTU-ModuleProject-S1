@@ -60,6 +60,12 @@ void plotTrajectory() {
     gp.send1d(trajectoryB);
 }
 
+bool validationCheck(float initialSpeed, float angleA, float angleB) {
+    if (initialSpeed <= 0) return 0;
+    if ((angleA || angleB > 90) && (angleA || angleB <= 0)) return 0;
+    return 1;
+}
+
 int main()
 {
     cout << "Initial Speed (m/s): ";
@@ -70,6 +76,11 @@ int main()
 
     cout << "Angle B (deg): ";
     cin >> angleB;
+
+    if (!validationCheck(initialSpeed, angleA, angleB)) {
+        cout << "\nInvalid inputs. Please try again." << endl;
+        return 0;
+    }
 
     vector<float> speeds = calculateSpeedsAfterCollision(initialSpeed, angleA, angleB);
     speedAfterCollisionA = speeds[0];

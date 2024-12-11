@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <string>
 #include <cmath>
-#include "gnuplot-iostream.h";
+#include "gnuplot-iostream.h"
 
 using namespace std;
 
@@ -28,6 +28,11 @@ double calculatePeriod(double radius, double altitude, double velocity) {
 
 void simulateOrbit() {
     cout << endl;
+}
+
+bool validationCheck(float radius, float massOfPlanet, float altitude) {
+    // if ( <= 0) return 0;
+    return 1;
 }
 
 int main()
