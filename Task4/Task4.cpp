@@ -113,10 +113,10 @@ int main()
             main();
             return 0;
         case 1:
-            cout << "Satellite Velocity: " << satelliteVelocity << endl << endl;
+            cout << "Satellite Velocity: " << satelliteVelocity << "m/s" << endl << endl;
             break;
         case 2:
-            cout << "Satellite Period: " << satellitePeriod << endl << endl;
+            cout << "Satellite Period: " << satellitePeriod << "s" << endl << endl;
             break;
         case 3:
             plotPositionTimeGraph();
