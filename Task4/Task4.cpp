@@ -28,7 +28,6 @@ double calculatePeriod(double radius, double altitude, double velocity) {
 void plotPositionTimeGraph() {
     cout << "Calculating the Position - Time graph...\n" << endl;
     Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
-
     float omega = 2 * PI / satellitePeriod;
     vector<pair<float, float>> x_t, y_t;
     for (int i = 0; i < 1000; ++i)
@@ -36,11 +35,9 @@ void plotPositionTimeGraph() {
         float t = satellitePeriod * i / (1000-1);
         float x = (radius + altitude) * cos(omega * t);
         float y = (radius + altitude) * sin(omega * t);
-
         x_t.push_back(make_pair(t, x));
         y_t.push_back(make_pair(t, y));
     }
-
     gp << "set terminal qt size 800,600\n";
     gp << "set title 'Position-Time Graphs'\n";
     gp << "set xlabel 'Time (s)'\n";
