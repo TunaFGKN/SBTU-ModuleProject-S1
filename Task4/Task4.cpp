@@ -50,7 +50,7 @@ void plotPositionTimeGraph() {
 }
 
 void plotOrbit() {
-    cout << "Calculating the orbit..\n" << endl;
+    cout << "Calculating the orbit...\n" << endl;
     Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
     float omega = 2 * PI / satellitePeriod;
     vector<pair<float, float>> xy;
@@ -69,6 +69,12 @@ void plotOrbit() {
     gp << "plot '-' with lines title 'Satellite Orbit'\n";
     gp.send1d(xy);
 }
+
+//void plot3DOrbit() {
+//    cout << "Calculating the 3D orbit...\n" << endl;
+//    system("cd C:\\Users\\hp\\source\\repos\\Module");
+//    system("python satellite_orbit.py");
+//}
 
 bool validationCheck(float radius, float massOfPlanet, float altitude) {
     if (radius <= 0 || massOfPlanet <= 0 || altitude <= 0) return 0;
@@ -121,6 +127,9 @@ int main()
         case 4:
             plotOrbit();
             break;
+        /*case 5:
+            plot3DOrbit();
+            break;*/
         case 9:
             cout << "Closing the program...\n" << endl;
             return 0;
