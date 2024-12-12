@@ -87,6 +87,7 @@ int main()
     speedAfterCollisionB = speeds[1];
     energyLoss = calculateEnergyLoss(initialSpeed, speedAfterCollisionA);
 
+    cout << fixed << setprecision(3);
     cout << "------------------------------------------------------------------------------------------------------" << endl;
     cout << "1) Display speeds after collision.\n2) Display kinetic energy loss of Asteroid A.\n3) Plot trajectory.\n9) Exit.\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
     cout << "------------------------------------------------------------------------------------------------------\n" << endl;
@@ -102,10 +103,10 @@ int main()
             main();
             return 0;
         case 1:
-            cout << fixed << setprecision(3) << "Speed after collision of A: " << speedAfterCollisionA << "m/s" << endl << "Speed after collision of B: " << speedAfterCollisionB << "m/s \n" << endl;
+            cout << "Speed after collision of A: " << speedAfterCollisionA << "m/s" << endl << "Speed after collision of B: " << speedAfterCollisionB << "m/s \n" << endl;
             break;
         case 2:
-            cout << fixed << setprecision(3) << "Kinetic energy loss is: " << energyLoss << "m J \n" << endl;
+            cout << "Kinetic energy loss is: " << energyLoss << "m J \n" << endl;
             break;
         case 3:
             plotTrajectory();

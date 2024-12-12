@@ -51,7 +51,7 @@ void printPosition(float timeFraction = 1) {
 }
 
 void plotTrajectory() {
-	// Create GNUPlot object
+	cout << "Calculating the trajectory...\n" << endl;	
 	Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
 
 	vector<pair<float, float>> trajectoryData; // X ve Y koordinatlarý
@@ -73,8 +73,6 @@ void plotTrajectory() {
 
 	// Send data to gnuplot
 	gp.send1d(trajectoryData);
-
-	cout << "Trajectory plotted successfully!\n" << endl;
 }
 
 float calculateDistanceToHitThePerson() {
@@ -107,7 +105,8 @@ int main()
 
 	ftime = findTheFlightTime();
 	impactPoint = initialSpeed * cos(radian) * ftime;
-
+	
+	cout << fixed << setprecision(3);
 	cout << "------------------------------------------------------------------------------------------------------" << endl;
 	cout << "1) Display the time of flight.\n2) Find the impact point.\n3) Horizontal and vertical coordinates of the snowball's motion over time.\n4) Decide if the snowball will hit the person or not.\n5) Exact distance at which the snowball will hit a person standing at a specified distance and height.\n6) Plot the trajectory.\n9) Exit\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
 	cout << "------------------------------------------------------------------------------------------------------\n" << endl;
@@ -123,10 +122,10 @@ int main()
 				main();
 				return 0;
 			case 1: // Flight time
-				cout << fixed << setprecision(3) << "Flight time is " << ftime << " seconds.\n" << endl;
+				cout << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
 			case 2: // Impact point
-				cout << fixed << setprecision(3) << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
+				cout << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
 			case 3: // Position vector over 4 time intervals
 				printPosition(0.25);

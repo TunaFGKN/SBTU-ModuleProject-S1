@@ -33,22 +33,23 @@ vector<float> findKineticEnergy(float massOfBullet, float initialSpeed, float ma
 }
 
 void plotSwingPath() {
-    cout << "Calculating the path..." << endl;
+    cout << "Calculating the path...\n" << endl;
     Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
 
-    float amplitude = asin(dHeight / pendulumLength);
-    float angularFrequency = sqrt(GRAVITY / pendulumLength);
-    float timeStep = 2 * PI / (angularFrequency * 100);
+    float thetaMax = acos(1 - dHeight / pendulumLength);
+    vector<float> time, x, y;
+    for (int i = 0; i < 500; ++i)
+    {
+        float t = 2 * PI * i / (500 - 1);
+        float theta = thetaMax * cos(t);
+        float x_pos = pendulumLength * sin(theta);
+        float y_pos = -pendulumLength * cos(theta);
 
-    vector<pair<float, float>> swingPath;
-
-    for (int i = 0; i < 100; ++i) {
-        float time = i * timeStep;
-        float angle = amplitude * cos(angularFrequency * time);
-        float x = pendulumLength * sin(angle);
-        float y = -pendulumLength * cos(angle);
-        swingPath.emplace_back(x,y);
+        time.push_back(t);
+        x.push_back(x_pos);
+        y.push_back(y_pos);
     }
+
     gp << "set title 'Trajectory After Collision'\n";
     gp << "set xlabel 'X Position (m)'\n";
     gp << "set ylabel 'Y Position (m)'\n";
@@ -56,11 +57,11 @@ void plotSwingPath() {
     gp << "set key left top\n";
     gp << "plot '-' with lines title 'Swing Path' \n";
         
-    gp.send1d(swingPath);
+    gp.send1d(make_pair(x,y));
 }
 
 bool validationCheck(float initialSpeed, float massOfBullet, float massOfPendulum, float pendulumLength) {
-    if (initialSpeed || massOfBullet || massOfPendulum || pendulumLength <= 0) return 0;    
+    if (initialSpeed <= 0 || massOfBullet <= 0 || massOfPendulum <= 0 || pendulumLength <= 0) return 0;
     return 1;
 }
 
@@ -88,6 +89,7 @@ int main()
     kineticEnergyBullet = findKineticEnergy(massOfBullet, initialSpeed, massOfPendulum, commonSpeed)[0];
     kineticEnergyCombined = findKineticEnergy(massOfBullet, initialSpeed, massOfPendulum, commonSpeed)[1];
 
+    cout << fixed << setprecision(3);
     cout << "------------------------------------------------------------------------------------------------------" << endl;
     cout << "1) Find the common speed.\n2) Find the vertical height reached by the pendulum after the collision.\n3) Find the kinetic energy of bullet before collision.\n4) Find the combined kinetic energy after collision.\n5) Plot the path.\n9) Exit.\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
     cout << "------------------------------------------------------------------------------------------------------\n" << endl;
@@ -102,20 +104,20 @@ int main()
             main();
             return 0;
         case 1:
-            cout << fixed << setprecision(3) << "Common Speed: " << commonSpeed << " m/s \n"<< endl;
+            cout << "Common Speed: " << commonSpeed << " m/s \n"<< endl;
             break;
         case 2:
-            cout << fixed << setprecision(3) << "Vertical height reached by the pendulum after the collision: " << dHeight << " m \n" << endl;
+            cout << "Vertical height reached by the pendulum after the collision: " << dHeight << " m \n" << endl;
             break;
         case 3:
-            cout << fixed << setprecision(3) << "Kinetic energy of bullet before collision: " << kineticEnergyBullet << " J \n" << endl;
+            cout << "Kinetic energy of bullet before collision: " << kineticEnergyBullet << " J \n" << endl;
             break;
         case 4:
-            cout << fixed << setprecision(3) << "Combined kinetic energy after collision: " << kineticEnergyCombined << " J \n" << endl;
+            cout << "Combined kinetic energy after collision: " << kineticEnergyCombined << " J \n" << endl;
             break;
         case 5:
             plotSwingPath();
-            cout << endl;
+            break;
         case 9:
             cout << "Closing the program...\n" << endl;
             return 0;

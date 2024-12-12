@@ -31,7 +31,7 @@ void simulateOrbit() {
 }
 
 bool validationCheck(float radius, float massOfPlanet, float altitude) {
-    // if ( <= 0) return 0;
+    if (radius <= 0 || massOfPlanet <= 0 || altitude <= 0) return 0;
     return 1;
 }
 
@@ -45,6 +45,11 @@ int main()
 
     cout << "Enter altitude of the satellite from the planet (m): ";
     cin >> altitude;
+
+    if (!validationCheck(radius, massOfPlanet, altitude)) {
+        cout << "\nInvalid inputs. Please try again." << endl;
+        return 0;
+    }
 
     satelliteVelocity = calculateVelocity(massOfPlanet, radius, altitude);
     satellitePeriod = calculatePeriod(radius, altitude, satelliteVelocity);
@@ -60,6 +65,10 @@ int main()
 
         switch (option)
         {
+        case 0:
+            cout << "Returning to the beginning...\n" << endl;
+            main();
+            return 0;
         case 1:
             cout << "Satellite Velocity: " << satelliteVelocity << endl << endl;
             break;
