@@ -23,11 +23,54 @@ double calculateVelocity(double massOfPlanet, double radius, double altitude) {
 
 double calculatePeriod(double radius, double altitude, double velocity) {
     return (2 * PI * (radius + altitude)) / velocity;
-    // return sqrt((4 * pow(PI, 2) * pow(radius + altitude, 3)) / (G * massOfPlanet));
 }
 
-void simulateOrbit() {
-    cout << endl;
+void plotPositionTimeGraph() {
+    cout << "Calculating the Position - Time graph...\n" << endl;
+    Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
+
+    float omega = 2 * PI / satellitePeriod;
+    vector<pair<float, float>> x_t, y_t;
+    for (int i = 0; i < 1000; ++i)
+    {
+        float t = satellitePeriod * i / (1000-1);
+        float x = (radius + altitude) * cos(omega * t);
+        float y = (radius + altitude) * sin(omega * t);
+
+        x_t.push_back(make_pair(t, x));
+        y_t.push_back(make_pair(t, y));
+    }
+
+    gp << "set terminal qt size 800,600\n";
+    gp << "set title 'Position-Time Graphs'\n";
+    gp << "set xlabel 'Time (s)'\n";
+    gp << "set ylabel 'Position (m)'\n";
+    gp << "set grid\n";
+    gp << "plot '-' using 1:2 with lines title 'x(t) = r * cos(wt)', "
+        "'-' using 1:2 with lines title 'y(t) = r * sin(wt)'\n";
+    gp.send1d(x_t);  // X(t) data
+    gp.send1d(y_t);  // Y(t) data
+}
+
+void plotOrbit() {
+    cout << "Calculating the orbit..\n" << endl;
+    Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
+    float omega = 2 * PI / satellitePeriod;
+    vector<pair<float, float>> xy;
+    for (int i = 0; i < 1000; ++i)
+    {
+        float t = satellitePeriod * i / (1000 - 1);
+        float x = (radius + altitude) * cos(omega * t);
+        float y = (radius + altitude) * sin(omega * t);
+        xy.push_back(make_pair(x, y));
+    }
+    gp << "set terminal qt size 800,800\n";
+    gp << "set xlabel 'X Position (s)'\n";
+    gp << "set ylabel 'Y Position (m)'\n";
+    gp << "set grid\n";
+    gp << "set size ratio -1\n";
+    gp << "plot '-' with lines title 'Satellite Orbit'\n";
+    gp.send1d(xy);
 }
 
 bool validationCheck(float radius, float massOfPlanet, float altitude) {
@@ -56,7 +99,7 @@ int main()
 
     cout << fixed << setprecision(3);
     cout << "------------------------------------------------------------------------------------------------------" << endl;
-    cout << "1) Find the satellite's orbital velocity.\n2) Find the satellite's period.\n3) Simulate satellite orbits around the planet.\n9) Exit.\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
+    cout << "1) Find the satellite's orbital velocity.\n2) Find the satellite's period.\n3) Plot Position - Time graphs.\n4) Simulate satellite orbits around the planet.\n9) Exit.\nHello, please choose the option that you want to perform. Enter '9' to exit the program." << endl;
     cout << "------------------------------------------------------------------------------------------------------\n" << endl;
 
     while (true) {
@@ -76,7 +119,10 @@ int main()
             cout << "Satellite Period: " << satellitePeriod << endl << endl;
             break;
         case 3:
-            simulateOrbit();
+            plotPositionTimeGraph();
+            break;
+        case 4:
+            plotOrbit();
             break;
         case 9:
             cout << "Closing the program...\n" << endl;
