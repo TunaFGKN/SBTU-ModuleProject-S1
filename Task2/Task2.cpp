@@ -61,8 +61,15 @@ void plotTrajectory() {
 }
 
 bool validationCheck(float initialSpeed, float angleA, float angleB) {
-    if (initialSpeed <= 0) return 0;
-    if ((angleA || angleB > 90) && (angleA || angleB <= 0)) return 0;
+    if (initialSpeed <= 0) {
+        return 0;
+    }
+    if (angleA > 90 || angleB > 90 ) {
+        return 0;
+    }
+    if (angleA < 0 || angleB < 0) {
+        return 0;
+    }
     return 1;
 }
 
