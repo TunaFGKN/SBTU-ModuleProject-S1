@@ -127,11 +127,16 @@ int main()
 			case 2: // Impact point
 				cout << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
-			case 3: // Position vector over 4 time intervals
+			case 3: // Position vector over time.
 				printPosition(0.25);
 				printPosition(0.5);
 				printPosition(0.75);
 				printPosition(1);
+				float timeFraction;
+				timeFraction = 1;
+				cout << "Enter time fraction (between 0-1): ";
+				cin >> timeFraction;
+				printPosition(timeFraction);
 				cout << endl;
 				break;
 			case 4: // Determine if the ball hits the person

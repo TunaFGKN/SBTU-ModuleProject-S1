@@ -5,9 +5,9 @@ from matplotlib.animation import FuncAnimation
 
 G = 6.67430e-11 
 
-planet_mass = 5.972e24
-planet_radius = 6371000
-satellite_height = 100000
+planet_mass = float(input("Enter the planet mass: "))
+planet_radius = float(input("Enter the planet radius: "))
+satellite_height = float(input("Enter the altitude: "))
 
 r = planet_radius + satellite_height
 orbital_velocity = np.sqrt(G * planet_mass / r)
