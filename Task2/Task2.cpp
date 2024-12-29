@@ -35,7 +35,6 @@ void plotTrajectory() {
     vector<pair<float, float>> trajectoryA;
     vector<pair<float, float>> trajectoryB;
 
-    // Zaman aralýðý ve yörünge hesaplamalarý
     for (float t = 0; t <= 10; t += 0.1) {
 
         // After Collision - Asteroid A

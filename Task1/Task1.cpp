@@ -113,6 +113,7 @@ int main()
 
 	while (true) {
 		int option;
+		cout << "Please enter the option that you want to perform: ";
 		cin >> option;
 
 		switch (option)
@@ -121,25 +122,20 @@ int main()
 				cout << "Returning to the beginning...\n" << endl;
 				main();
 				return 0;
-			case 1: // Flight time
+			case 1:
 				cout << "Flight time is " << ftime << " seconds.\n" << endl;
 				break;
-			case 2: // Impact point
+			case 2: 
 				cout << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
-			case 3: // Position vector over time.
+			case 3: 
 				printPosition(0.25);
 				printPosition(0.5);
 				printPosition(0.75);
 				printPosition(1);
-				float timeFraction;
-				timeFraction = 1;
-				cout << "Enter time fraction (between 0-1): ";
-				cin >> timeFraction;
-				printPosition(timeFraction);
 				cout << endl;
 				break;
-			case 4: // Determine if the ball hits the person
+			case 4: 
 				if (impactPoint < 4) {
 					cout << "Snowball will not hit the person.\n" << endl;
 					break;
@@ -151,10 +147,10 @@ int main()
 					cout << "Snowball will not hit the person.\n" << endl;
 				}
 				break;
-			case 5: // Exact Distance
+			case 5: 
 				cout << "If the person were standing " << calculateDistanceToHitThePerson() << " meters away from the wall, the snowball would have hit the person. \n" << endl;
 				break;
-			case 6: // Plot trajectory
+			case 6: 
 				plotTrajectory();
 				break;
 			case 9:

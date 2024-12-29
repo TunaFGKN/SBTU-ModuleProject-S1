@@ -102,6 +102,7 @@ int main()
 
     while (true) {
         int option;
+        cout << "Choose option: ";
         cin >> option;
 
         switch (option)

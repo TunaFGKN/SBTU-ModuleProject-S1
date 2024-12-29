@@ -28,12 +28,10 @@ ax.set_title('Planet and Satellite Orbit')
 ax.legend()
 
 top, = ax.plot([], [], [], 'go', markersize=10)
-
 def update(frame):
     top.set_data([x[frame]], [y[frame]])
     top.set_3d_properties(z[frame])
     return top,
 
 ani = FuncAnimation(fig, update, frames=len(time), interval=1, blit=True)
-
 plt.show()
