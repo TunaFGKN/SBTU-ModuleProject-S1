@@ -13,7 +13,6 @@
 
 using namespace std;
 
-// Declaring variables
 const float GRAVITY = 9.8;
 const float PI = 3.14159;
 float initialSpeed, angle, height;
@@ -35,7 +34,6 @@ float solveForQuadraticEquation(float a, float b, float c) {
 	}
 }
 
-// Returns the flight time by solving the quadratic equation 
 float findTheFlightTime() {
 	return solveForQuadraticEquation(GRAVITY/2, initialSpeed * sin(radian), -height);
 }
@@ -54,13 +52,13 @@ void plotTrajectory() {
 	cout << "Calculating the trajectory...\n" << endl;	
 	Gnuplot gp("\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" -persist");
 
-	vector<pair<float, float>> trajectoryData; // X ve Y koordinatlarý
+	vector<pair<float, float>> trajectoryData; 
 
 	for (float t = 0; t <= ftime; t += 0.01) {
-		float x = initialSpeed * cos(radian) * t; // X coordinate
-		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t); // Y coordinate
+		float x = initialSpeed * cos(radian) * t;
+		float y = (-initialSpeed * sin(radian) * t) - (0.5 * GRAVITY * t * t);
 
-		if (x == impactPoint) break; // stop when it touches the ground
+		if (x == impactPoint) break; // Stop when it touches the ground
 
 		trajectoryData.push_back(make_pair(x, y)); // Data
 	}
