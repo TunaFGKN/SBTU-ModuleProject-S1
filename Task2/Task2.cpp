@@ -101,6 +101,7 @@ int main()
     while (true)
     {
         int option;
+        cout << "Please enter the option that you want to perform: ";
         cin >> option;
         switch (option)
         {

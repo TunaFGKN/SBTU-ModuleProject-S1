@@ -102,6 +102,7 @@ int main()
 
     while (true) {
         int option;
+        cout << "Please enter the option that you want to perform: ";
         cout << "Choose option: ";
         cin >> option;
 
