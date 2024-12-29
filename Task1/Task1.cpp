@@ -139,6 +139,7 @@ int main()
 					break;
 				}
 				if (calculateDistanceToHitThePerson() < 4) {
+					cout << "Alert! - Alert! - Alert!" << endl;
 					cout << "\aSnowball will hit the person.\n" << endl;
 				}
 				else {
