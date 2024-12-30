@@ -51,7 +51,7 @@ void plotTrajectory() {
     // GNUplot plotting the graph.
     gp << "set title 'Asteroid Collision Trajectory After Collision'\n";
     gp << "set xlabel 'x (m)'\n";
-    gp << "set ylabel 'y (m)'\n";
+    gp << "set ylabel '|y| (m)'\n";
     gp << "set grid\n";
     gp << "plot '-' with lines title 'Asteroid A (After)', "
         "'-' with lines title 'Asteroid B (After)'\n ";        
@@ -121,6 +121,7 @@ int main()
             break;        
         case 9:
             cout << "Closing the program...";
+            cout << endl;
             return 0;
         default:
             cout << "Invalid operation please try again.\n" << endl;
