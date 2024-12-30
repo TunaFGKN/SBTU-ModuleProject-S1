@@ -127,8 +127,10 @@ int main()
 				cout << "The ball will hit the ground " << impactPoint << " meters away from the edge of the barn.\n" << endl;
 				break;
 			case 3: 
+				printPosition(0.1);
 				printPosition(0.25);
 				printPosition(0.5);
+				printPosition(0.6);
 				printPosition(0.75);
 				printPosition(1);
 				cout << endl;
