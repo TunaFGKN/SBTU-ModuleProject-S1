@@ -44,14 +44,14 @@ void plotTrajectory() {
 
         // After Collision - Asteroid B
         float xB = speedAfterCollisionB * cos(angleB * PI / 180) * t;
-        float yB = (speedAfterCollisionB * sin(angleB * PI / 180) * t);
+        float yB = -(speedAfterCollisionB * sin(angleB * PI / 180) * t);
         trajectoryB.emplace_back(xB, yB);
     }
 
     // GNUplot plotting the graph.
     gp << "set title 'Asteroid Collision Trajectory After Collision'\n";
     gp << "set xlabel 'x (m)'\n";
-    gp << "set ylabel '|y| (m)'\n";
+    gp << "set ylabel 'y (m)'\n";
     gp << "set grid\n";
     gp << "plot '-' with lines title 'Asteroid A (After)', "
         "'-' with lines title 'Asteroid B (After)'\n ";        
